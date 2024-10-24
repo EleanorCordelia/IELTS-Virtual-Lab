@@ -1,0 +1,19 @@
+{
+    "users": [
+        {
+            "username": "Eleanor",
+            "speakingTime": 120,
+            "streak": 5
+        },
+        {
+            "username": "User One",
+            "speakingTime": 90,
+            "streak": 3
+        },
+        {
+            "username": "Test User",
+            "speakingTime": 60,
+            "streak": 2
+        }
+    ]
+}

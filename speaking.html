@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Speaking Class - IELTS9</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header></header>
+
+        <main>
+            <div class="tips-container">
+                <div class="tips-text">
+                    <img src="images/tips.png" class="tips-icon" />
+                  
+                    <span>Tips & Tricks</span>
+                </div>
+                <button class="close-button">×</button>
+               
+            </div>
+
+            <h2>View these clips and try to answer the questions below</h2>
+
+            <div class="content-container">
+                <div class="questions">
+                    <ol>
+                        <li>
+                            What was the main message or lesson from the video,
+                            and how do you think it applies to real-life
+                            situations?
+                        </li>
+                        <li>
+                            Can you describe one key moment or event from the
+                            video that stood out to you, and explain why it
+                            caught your attention?
+                        </li>
+                        <li>
+                            If you were the creator of the video, what would you
+                            change or add to make it more engaging or
+                            informative?
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="video-section">
+                    <iframe
+                        width="500"
+                        height="280"
+                        src="https://www.youtube.com/embed/ZwD1kG4PI0w"
+                        frameborder="0"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="control-button">Start</button>
+                <button id="pauseBtn" class="control-button" disabled>
+                    Pause
+                </button>
+                <button id="resumeBtn" class="control-button" disabled>
+                    Resume
+                </button>
+                <button id="finishBtn" class="control-button" disabled>
+                    Finish
+                </button>
+                <div class="record">
+                    <img
+                        src="images/c.png"
+                        alt="Record Icon"
+                        class="record-icon"
+                    />
+                    <span id="timer">00:00</span>
+                </div>
+            </div>
+
+            <div id="recordingsList"></div>
+        </main>
+
+        <script src="scripts/script.js"></script>
+        <script src="scripts/auth.js"></script>
+        <script src="scripts/speaking.js"></script>
+    </body>
+</html>

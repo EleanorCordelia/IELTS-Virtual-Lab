@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Class - IELTS9</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup.show {
+            display: block; 
+        }
+
+        .popup .close-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .popup .confirm-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <div class="tips-container">
+            <div class="tips-text">
+                <img src="images/tips.png" class="tips-icon" />
+                <span>Tips & Tricks</span>
+            </div>
+            <button class="close-button">×</button>
+        </div>
+        <div class="timer">0:72</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <h2>Type the fifth statement that you hear!</h2>
+        <div class="sound-response-container">
+            <div class="sound-icon">
+                <img src="images/sound.png" alt="Sound Icon" />
+            </div>
+            <div class="response-container">
+                <textarea
+                    id="textarea"
+                    placeholder="Your response"
+                    class="response-box"
+                ></textarea>
+                <p class="replay-count">Number of replays left: <span id="replaysLeft">3</span></p>
+            </div>
+        </div>
+
+        <button class="check-button">Check</button>
+
+        <div class="bottom-section">
+            
+            <div class="question-tracker">
+                <h3>Question Numbers</h3>
+                <div class="question-grid">
+                    <div class="question-box" id="question1">1</div>
+                    <div class="question-box" id="question2">2</div>
+                    <div class="question-box" id="question3">3</div>
+                </div>
+            </div>
+
+            <button class="finish-button">Finish</button>
+        </div>
+
+       
+        <div id="popup" class="popup hidden">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <img src="images/yay.png" alt="Success Image" class="popup-image">
+                <p class="popup-text">Congratulations on passing your test!</p>
+                <button class="confirm-btn">Awesome!</button>
+            </div>
+            <div class="confetti"></div>
+        </div>
+    </main>
+
+    <script>
+       
+        let currentQuestion = sessionStorage.getItem('currentQuestion') ? parseInt(sessionStorage.getItem('currentQuestion')) : 3; // Soal ketiga
+        let replaysLeft = sessionStorage.getItem('replaysLeft') ? parseInt(sessionStorage.getItem('replaysLeft')) : 3;
+        let questionStatus = JSON.parse(sessionStorage.getItem('questionStatus')) || {}; // Object untuk menyimpan status soal
+
+        const finishButton = document.querySelector('.finish-button');
+        const checkButton = document.querySelector('.check-button');
+        const responseBox = document.querySelector('.response-box');
+        const replaysLeftElement = document.getElementById("replaysLeft");
+        const popup = document.getElementById('popup'); 
+        const closePopup = document.querySelector('.close-btn'); 
+        const confirmButton = document.querySelector('.confirm-btn'); 
+
+    
+        function saveState() {
+            sessionStorage.setItem('currentQuestion', currentQuestion);
+            sessionStorage.setItem('replaysLeft', replaysLeft);
+            sessionStorage.setItem('questionStatus', JSON.stringify(questionStatus)); 
+        }
+
+        function loadQuestionStatus() {
+            for (let i = 1; i <= 3; i++) {
+                const questionBox = document.getElementById(`question${i}`);
+                if (questionStatus[i] === 'correct') {
+                    questionBox.classList.add('correct');
+                } else if (questionStatus[i] === 'incorrect') {
+                    questionBox.classList.add('incorrect');
+                }
+            }
+        }
+
+        loadQuestionStatus();
+
+    
+        replaysLeftElement.textContent = replaysLeft;
+
+        function checkAnswer() {
+            const userAnswer = responseBox.value.toLowerCase().trim();
+            const currentCorrectAnswer = "Baby you should paint my love".toLowerCase().trim(); // Jawaban untuk soal ketiga
+
+            const questionBox = document.getElementById(`question${currentQuestion}`);
+
+            if (userAnswer === currentCorrectAnswer) {
+                alert("Correct! Well done.");
+                questionBox.classList.add('correct');
+                questionStatus[currentQuestion] = 'correct';
+            } else {
+                replaysLeft--;
+                if (replaysLeft > 0) {
+                    alert("Incorrect. Try Again!");
+                    replaysLeftElement.textContent = replaysLeft;
+                } else {
+                    alert("Incorrect. No more replays left.");
+                    replaysLeftElement.textContent = 0;
+                    checkButton.disabled = true;
+                    questionBox.classList.add('incorrect');
+                    questionStatus[currentQuestion] = 'incorrect';
+                }
+            }
+            saveState();
+        }
+
+      
+        checkButton.addEventListener('click', function () {
+            checkAnswer();
+        });
+
+        
+        finishButton.addEventListener('click', function () {
+           
+            popup.classList.add('show');
+        });
+
+    
+        closePopup.addEventListener('click', function () {
+            popup.classList.remove('show');
+        });
+
+   
+        confirmButton.addEventListener('click', function () {
+            popup.classList.remove('show');
+        });
+
+      
+        function loadQuestionState() {
+            for (let i = 1; i <= 3; i++) {
+                const status = localStorage.getItem(`question${i}`);
+                if (status === 'correct') {
+                    document.getElementById(`question${i}`).classList.add('correct');
+                } else if (status === 'incorrect') {
+                    document.getElementById(`question${i}`).classList.add('incorrect');
+                }
+            }
+        }
+
+  
+        document.addEventListener('DOMContentLoaded', loadQuestionState);
+    </script>
+
+    <script src="scripts/script.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/course.js"></script>
+    <script src="scripts/listening.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
+    </script>
+</body>
+</html>

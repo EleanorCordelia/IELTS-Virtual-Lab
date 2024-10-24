@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Listening Class - IELTS9</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header></header>
+
+        <main>
+            <div class="tips-container">
+                <div class="tips-text">
+                    <img src="images/tips.png" class="tips-icon" />
+                    <span>Tips & Tricks</span>
+                </div>
+                <button class="close-button">×</button>
+            </div>
+            <div class="timer">0:60</div>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <h2>Type the third statement that you hear!</h2>
+            <div class="sound-response-container">
+                <div class="sound-icon">
+                    <img src="images/sound.png" alt="Sound Icon" />
+                </div>
+                <div class="response-container">
+                    <textarea
+                        id="textarea"
+                        placeholder="Your response"
+                        class="response-box"
+                    ></textarea>
+                    <p class="replay-count">
+                        Number of replays left: <span id="replaysLeft">3</span>
+                    </p>
+                </div>
+            </div>
+
+            <button class="check-button">Check</button>
+            <button class="next-button">Next >>></button>
+
+            <div class="question-tracker">
+                <h3>Question Numbers</h3>
+                <div class="question-grid">
+                    <div class="question-box" id="question1">1</div>
+                    <div class="question-box" id="question2">2</div>
+                    <div class="question-box" id="question3">3</div>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            let currentQuestion = sessionStorage.getItem("currentQuestion")
+                ? parseInt(sessionStorage.getItem("currentQuestion"))
+                : 3; // Soal ketiga
+            let replaysLeft = sessionStorage.getItem("replaysLeft")
+                ? parseInt(sessionStorage.getItem("replaysLeft"))
+                : 3;
+            let questionStatus =
+                JSON.parse(sessionStorage.getItem("questionStatus")) || {}; // Object untuk menyimpan status soal
+
+            const nextButton = document.querySelector(".next-button");
+            const checkButton = document.querySelector(".check-button");
+            const responseBox = document.querySelector(".response-box");
+            const replaysLeftElement = document.getElementById("replaysLeft");
+
+            function saveState() {
+                sessionStorage.setItem("currentQuestion", currentQuestion);
+                sessionStorage.setItem("replaysLeft", replaysLeft);
+                sessionStorage.setItem(
+                    "questionStatus",
+                    JSON.stringify(questionStatus)
+                ); // Simpan status soal
+            }
+
+            function loadQuestionStatus() {
+                for (let i = 1; i <= 3; i++) {
+                    const questionBox = document.getElementById(`question${i}`);
+                    if (questionStatus[i] === "correct") {
+                        questionBox.classList.add("correct");
+                    } else if (questionStatus[i] === "incorrect") {
+                        questionBox.classList.add("incorrect");
+                    }
+                }
+            }
+
+            loadQuestionStatus();
+
+            replaysLeftElement.textContent = replaysLeft;
+
+            function checkAnswer() {
+                const userAnswer = responseBox.value.toLowerCase().trim();
+                const currentCorrectAnswer =
+                    "It's the picture of a thousand sunsets"
+                        .toLowerCase()
+                        .trim(); // Jawaban untuk soal ketiga
+
+                const questionBox = document.getElementById(
+                    `question${currentQuestion}`
+                );
+
+                if (userAnswer === currentCorrectAnswer) {
+                    alert("Correct! Well done.");
+                    questionBox.classList.add("correct");
+                    questionStatus[currentQuestion] = "correct";
+                } else {
+                    replaysLeft--;
+                    if (replaysLeft > 0) {
+                        alert("Incorrect. Try Again!");
+                        replaysLeftElement.textContent = replaysLeft;
+                    } else {
+                        alert("Incorrect. No more replays left.");
+                        replaysLeftElement.textContent = 0;
+                        checkButton.disabled = true;
+                        questionBox.classList.add("incorrect");
+                        questionStatus[currentQuestion] = "incorrect";
+                    }
+                }
+                saveState();
+            }
+
+            checkButton.addEventListener("click", function () {
+                checkAnswer();
+            });
+
+            nextButton.addEventListener("click", function () {
+                currentQuestion++;
+                if (currentQuestion <= 3) {
+                    replaysLeft = 3;
+                    replaysLeftElement.textContent = replaysLeft;
+                    checkButton.disabled = false;
+                    responseBox.value = "";
+                    saveState();
+                    window.location.href = "listening3.html";
+                } else {
+                    alert("All questions completed!");
+                }
+            });
+
+            replaysLeftElement.textContent = replaysLeft;
+
+            function loadQuestionStatus() {
+                for (let i = 1; i <= 3; i++) {
+                    const questionBox = document.getElementById(`question${i}`);
+                    if (questionStatus[i] === "correct") {
+                        questionBox.classList.add("correct");
+                    } else if (questionStatus[i] === "incorrect") {
+                        questionBox.classList.add("incorrect");
+                    }
+                }
+            }
+
+            loadQuestionStatus();
+        </script>
+
+        <script src="scripts/script.js"></script>
+        <script src="scripts/auth.js"></script>
+        <script src="scripts/course.js"></script>
+        <script src="scripts/listening.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", checkLoginStatus);
+        </script>
+    </body>
+</html>

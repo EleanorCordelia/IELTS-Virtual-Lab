@@ -1,0 +1,24 @@
+{
+    "results": [
+        {
+            "id": 1,
+            "question": "grobblechop",
+            "answer": "Yes"
+        },
+        {
+            "id": 2,
+            "question": "serendipity",
+            "answer": "No"
+        },
+        {
+            "id": 3,
+            "question": "europhia",
+            "answer": "No"
+        },
+        {
+            "id": 4,
+            "question": "ephemeral",
+            "answer": "Yes"
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Word Check - IELTS9</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header class="header">
+            <div class="logo">
+                <img src="images/logo.png" alt="IELTS9 Logo" />
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="course.html">Courses</a></li>
+                    <li><a href="#">My Reports</a></li>
+                    <li><a href="#">Challenge</a></li>
+                    <li>
+                        <a href="#" class="user">Eleanor</a>
+                        <img src="images/profile.png" class="profile-pic" />
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="tips-container">
+                <div class="tips-text">
+                    <img src="images/tips.png" class="tips-icon" />
+
+                    <span>Tips & Tricks</span>
+                </div>
+                <button class="close-button">×</button>
+            </div>
+
+            <div class="timer">0:50</div>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
+            <h1>Is this a real English word?</h1>
+            <p class="word">grobblechop</p>
+
+            <div class="button-container">
+                <div
+                    class="response-image"
+                    draggable="true"
+                    id="yes"
+                    onclick="handleResponse('yes')"
+                >
+                    <img src="images/yes.png" alt="Yes" draggable="false" />
+                </div>
+                <div
+                    class="response-image"
+                    draggable="true"
+                    id="no"
+                    onclick="handleResponse('no')"
+                >
+                    <img src="images/no.png" alt="No" draggable="false" />
+                </div>
+            </div>
+
+            <div class="drag-area">
+                <p>Drag your answer here!</p>
+            </div>
+
+            <a href="result.html" class="next-button">Next >>></a>
+        </main>
+
+        <script src="scripts/script.js"></script>
+        <script src="scripts/auth.js"></script>
+        <script src="scripts/speaking.js"></script>
+        <script src="scripts/reading.js"></script>
+    </body>
+</html>
